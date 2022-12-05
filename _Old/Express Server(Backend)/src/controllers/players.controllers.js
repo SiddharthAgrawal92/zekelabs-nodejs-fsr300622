@@ -1,5 +1,9 @@
 
 const getAllPlayers = (req, res) => {
+    // 1. connecting to sql db --> secured banking transaction
+    // 2. connecting to Mongodb db --> for all others
+    // 3. elastic cache --> JWT
+
     //     //db operation to store the data
     //     setTimeout(() => {
     //         isDbInsertionSuccess = true;
