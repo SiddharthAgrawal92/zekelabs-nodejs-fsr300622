@@ -130,56 +130,64 @@
 //         MongoDB     DBM
 
 // 1. Hierarchical Data Modelling With parent References
-db.my_collection.insertMany([
+db.parentRefCollection.insertMany([
     { _id: "101", name: "MongoDB", parent: "Databases" },
     { _id: "102", name: "DBM", parent: "Databases" },
     { _id: "103", name: "Languages", parent: "Programming" },
     { _id: "104", name: "Databases", parent: "Programming" },
     { _id: "105", name: "Programming", parent: "Books" },
-    { _id: "105", name: "Books", parent: null },
+    { _id: "106", name: "Books", parent: null },
 ])
 
-// db.my_collection.find({ parent: "Databases" }) // give me all the docs w of parent "Databases"
-// db.my_collection.findOne({ name: "Databases" }) // get the parent record
+// give me all the docs of parent "Databases"
+db.parentRefCollection.find({ parent: "Databases" });
+
+//provide you the reference of parent in the doc named "MongoDB" you are searching
+const parentOfMongoDB = db.parentRef.findOne({ name: "MongoDB" }).parent;
+db.parentRef.findOne({ name: parentOfMongoDB });
 
 _____________________________________________________________________________________________________________
 
 // 2. Hierarchical Data Modelling With Child References
-db.my_collection.insertMany([
+db.childRefCollection.insertMany([
     { _id: "101", name: "MongoDB", children: [] },
     { _id: "102", name: "DBM", children: [] },
     { _id: "103", name: "Languages", children: [] },
     { _id: "104", name: "Databases", children: ["MongoDB", "DBM"] },
     { _id: "105", name: "Programming", children: ["Languages", "Databases"] },
-    { _id: "105", name: "Books", children: ["Programming"] }
+    { _id: "106", name: "Books", children: ["Programming"] }
 ])
 
-db.my_collection.find({ name: "Mo" }).children // give me all children of "Databases"
+//get all children docs of a name=Databases
+const childrenRef = db.childRefCollection.findOne({ name: "Databases" }).children;
+db.childRefCollection.find({ name: { $in: childrenRef } });
 
 _______________________________________________________________________________________________________________
 
-// 3. Hierarchical Data Modelling With Ancestory Array
-db.my_collection.insertMany([
+// 3. Hierarchical Data Modelling With Ancestry Array
+db.ancestry.insertMany([
     { _id: "101", name: "MongoDB", ancestors: ["Books", "Programming", "Databases"], parent: "Databases" },
     { _id: "102", name: "DBM", ancestors: ["Books", "Programming", "Databases"], parent: "Databases" },
     { _id: "103", name: "Languages", ancestors: ["Books", "Programming"], parent: "Programming" },
     { _id: "104", name: "Databases", ancestors: ["Books", "Programming"], parent: "Programming" },
     { _id: "105", name: "Programming", ancestors: ["Books"], parent: "Books" },
-    { _id: "105", name: "Books", ancestors: [], parent: null }
+    { _id: "106", name: "Books", ancestors: [], parent: null }
 ])
 
-db.my_collection.find({ name: "MongoDB" }).ancestors // give me all children of "Databases"
+// give me all ancestors of "MongoDB"
+const mongoDBAncestors = db.ancestry.findOne({ name: "MongoDB" }).ancestors;
+db.ancestry.find({ name: { $in: mongoDBAncestors } });
 
 _______________________________________________________________________________________________________________
 
 // 4. Hierarchical Data Modelling With Materialized Paths
-db.my_collection.insertMany([
+db.materializedPath.insertMany([
     { _id: "101", name: "MongoDB", path: ",Books,Programming,Databases," },
     { _id: "102", name: "DBM", path: ",Books,Programming,Databases," },
     { _id: "103", name: "Languages", path: ",Books,Programming," },
     { _id: "104", name: "Databases", path: ",Books,Programming," },
     { _id: "105", name: "Programming", path: ",Books," },
-    { _id: "105", name: "Books", path: null }
+    { _id: "106", name: "Books", path: null }
 ])
 
-db.my_collection.find({ path: /,Programming,/ }) // to get all the descendents of Programming
+db.materializedPath.find({ path: /,Programming,/ }) // to get all the descendants of Programming

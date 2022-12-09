@@ -1,3 +1,6 @@
+##To get the executionStats of a query
+db.collection_name.find({}).explain('executionStats');
+
 1. Database Commands
     ## View all databases
     $show dbs
