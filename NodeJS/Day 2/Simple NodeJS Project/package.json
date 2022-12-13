@@ -1,0 +1,12 @@
+{
+  "name": "simple-nodejs-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "testing_file": "node test.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
