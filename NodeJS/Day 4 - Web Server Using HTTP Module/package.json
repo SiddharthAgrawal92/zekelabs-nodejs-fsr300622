@@ -1,0 +1,21 @@
+{
+  "name": "my-http-server",
+  "version": "1.0.0-beta",
+  "description": "For handling HTTP calls",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "HTTP",
+    "Server"
+  ],
+  "author": "sid",
+  "license": "ISC",
+  "dependencies": {
+    "node-emoji": "^1.11.0"
+  },
+  "devDependencies": {
+    
+  }
+}
