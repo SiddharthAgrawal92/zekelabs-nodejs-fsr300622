@@ -13,9 +13,7 @@
   "author": "sid",
   "license": "ISC",
   "dependencies": {
+    "mongodb": "^4.12.1",
     "node-emoji": "^1.11.0"
-  },
-  "devDependencies": {
-    
   }
 }
