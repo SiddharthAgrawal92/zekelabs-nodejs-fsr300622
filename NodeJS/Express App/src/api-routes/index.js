@@ -15,6 +15,6 @@ routes.use('/users', UserRoutes);
 routes.use((req, res) => {
     // res.status(404).send({ msg: 'URL Not found!' });
     res.status(404).sendFile(path.resolve(__dirname, '../../public/notFound.html')); //send a file
-})
+});
 
 module.exports = routes;

@@ -9,6 +9,8 @@ UserRoutes.post('/bulk', UserControllers.createBulkUsers);
 
 UserRoutes.put('/:userId', UserControllers.updateUser);
 
+UserRoutes.delete('/:userId', UserControllers.deleteUser);
+
 // UserRoutes.put('/:userId/projects/:projectId', UserControllers.updateUser);
 
 module.exports = UserRoutes;
