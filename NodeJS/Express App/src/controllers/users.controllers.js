@@ -17,7 +17,7 @@ const createUser = (req, res) => {
             return res.status(500).send({ msg: 'Internal Server Error' });
         }
         res.status(201).send({ result: createdUser });
-    })
+    });
 }
 
 const createBulkUsers = (req, res) => {
@@ -39,10 +39,10 @@ const deleteUser = (req, res) => {
         if (err) {
             return res.status(500).send({ msg: 'Internal Server Error' });
         }
-        if (deleteUser.deletedCount === 1) {
+        if (deletedUser.deletedCount === 1) {
             res.status(200).send({ result: deletedUser });
         } else {
-            res.status(400).send({ msg: 'user nor found with the sent userId' });
+            res.status(400).send({ msg: 'user not found with the sent userId' });
         }
     });
 }

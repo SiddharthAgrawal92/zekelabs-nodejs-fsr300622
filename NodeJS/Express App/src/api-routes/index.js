@@ -3,7 +3,12 @@ const routes = require('express').Router();
 const UserRoutes = require('./users.routes');
 
 routes.get('/', (req, res) => {
-    res.send({ msg: 'Hello from server' });
+    // res.send({ msg: 'Hello from server' });
+    // res.render('index', { title: 'Home', message: "Welcome to Our Server!" });
+    let jadeTemplateData = {
+        studentList: [{ name: 'Siddharth' }, { name: 'Adam' }]
+    }
+    res.render('index2', jadeTemplateData);
 });
 
 //------handle module-wise API endpoints-----//

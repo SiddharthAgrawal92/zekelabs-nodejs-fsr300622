@@ -48,6 +48,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //resolving cors
 app.use(cors());
 
+//template engine settings
+app.set('views', path.join(__dirname, './views'));
+// app.set('view engine', 'pug');
+app.set('view engine', 'jade');
+
+
 app.use('/', (req, res, next) => {
     let log = {
         method: req.method,

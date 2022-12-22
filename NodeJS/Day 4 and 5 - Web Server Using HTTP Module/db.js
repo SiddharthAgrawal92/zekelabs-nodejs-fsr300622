@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
 const getMongoClient = async () => {
-    const clusterConnectionString = "mongodb+srv://sid1605:U0zj4zB4ogfxXbAA@cluster0.tf4ffv5.mongodb.net/test"
+    const clusterConnectionString = "mongodb+srv://sid1605:C7EDvQdwOjw26Gae@cluster0.tf4ffv5.mongodb.net/test"
     return new MongoClient(clusterConnectionString, { monitorCommands: true });
 }
 
