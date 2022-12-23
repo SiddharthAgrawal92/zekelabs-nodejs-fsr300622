@@ -2,11 +2,11 @@ const UserRoutes = require('express').Router();
 const UserControllers = require('../controllers/users.controllers');
 const UsersValidators = require('../validators/users.validators');
 
-UserRoutes.post('/', UsersValidators.validateCreateUser, UserControllers.createUser);
+UserRoutes.post('/', UsersValidators.validateCreateUser, UserControllers.registerUser);
+
+UserRoutes.head('/', UserControllers.detectIfUserAlreadyExist);
 
 UserRoutes.get('/', UserControllers.getUsers);
-
-UserRoutes.post('/bulk', UserControllers.createBulkUsers);
 
 UserRoutes.put('/:userId', UserControllers.updateUser);
 
