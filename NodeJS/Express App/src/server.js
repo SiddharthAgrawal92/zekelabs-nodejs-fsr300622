@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 //serving files statically
 app.use('/public', express.static(path.join(__dirname, '../public')));
@@ -18,6 +19,7 @@ app.use('/public', serveIndex(path.join(__dirname, '../public')));
 
 //db connection
 //mongoDB
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_CONNECTION_STRING);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB Connection error!'));
@@ -43,10 +45,19 @@ db.on('open', () => {
 
 //middleware
 //parses the body of each request
+
+app.use(cors((req, cb) => {
+    let corsOptions = { origin: false, credentials: false };
+    if (process.env.WHITELISTED_ORIGINS.indexOf(req.headers.origin) !== -1) {
+        corsOptions.origin = true;
+        corsOptions.credentials = true;
+    }
+    cb(null, corsOptions);
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //resolving cors
-app.use(cors());
+app.use(cookieParser());
 
 //template engine settings
 app.set('views', path.join(__dirname, './views'));
@@ -72,6 +83,6 @@ app.use('/', (req, res, next) => {
 //api-routes handler
 app.use('/', routes);
 
-app.listen(process.env.PORT, process.env.HOSTNAME, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Server is running at: http://${process.env.HOSTNAME}:${process.env.PORT}`);
 });
