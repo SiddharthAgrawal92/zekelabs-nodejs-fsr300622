@@ -1,13 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const apiBaseURL = 'http://localhost:8080';
 
 function App() {
 
   const [userList, setUserList] = useState([]);
+
+  const skip = useRef(0);
+  const limit = useRef(1);
+  const [player, setPlayer] = useState({});
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
@@ -25,7 +29,8 @@ function App() {
     //with access_token in cookie
     if (localStorage.getItem('isLoggedIn')) {
       setIsLoggedIn(true);
-      getUserList();
+      // getUserList();
+      getPlayerList();
     } else {
       setIsLoggedIn(false);
     }
@@ -59,6 +64,16 @@ function App() {
     });
   }
 
+  const getPlayerList = () => {
+    axios.get(`${apiBaseURL}/players?skip=${skip.current}&limit=${limit.current}`, { withCredentials: true }).then(res => {
+      if (res.status === 200 && res.data && res.data.playerList && res.data.playerList.length) {
+        const fetchedPlayer = res.data.playerList[0];
+        fetchedPlayer.totalRecords = res.data.totalRecords ? res.data.totalRecords : null;
+        setPlayer(fetchedPlayer);
+      }
+    })
+  }
+
   const handleLogin = () => {
     // Username: a@b.com
     // Password: Welcome@123
@@ -79,7 +94,8 @@ function App() {
           localStorage.setItem('isLoggedIn', true);
           setIsLoggedIn(true);
           setTimeout(() => {
-            getUserList();
+            // getUserList();
+            getPlayerList();
           }, 100);
         }
       });
@@ -92,8 +108,33 @@ function App() {
     <>
       {isLoggedIn ? <div>
         <div>
-          User List
-          {JSON.stringify(userList)}
+          {/* User List
+          {JSON.stringify(userList)} */}
+
+          <br />
+
+          <h1>Player List</h1>
+          <hr />
+          {Object.keys(player).length
+            ?
+            <>
+              <h3>Name: {player.name}</h3>
+              <h3>Sports: {player.sports}</h3>
+              <h3>Country: {player.country}</h3>
+              <h3>Club: {player.club}</h3>
+              <h3>Total Records: {player.totalRecords}</h3>
+              <img src={`${apiBaseURL}/public/images/players/${player.image}`} alt='player_image'></img>
+              <br />
+              <button disabled={skip.current === 0 ? true : false} onClick={() => {
+                skip.current = skip.current - 1;
+                getPlayerList();
+              }}>{'<Previous'}</button>&nbsp;&nbsp;&nbsp;
+              <button disabled={skip.current + 1 === player.totalRecords} onClick={() => {
+                skip.current = skip.current + 1;
+                getPlayerList();
+              }}>{'Next>'}</button>
+            </>
+            : ''}
         </div>
       </div> :
         <div>

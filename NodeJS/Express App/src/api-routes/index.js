@@ -3,6 +3,8 @@ const routes = require('express').Router();
 const UserRoutes = require('./users.routes');
 const AuthRoutes = require('./auth.routes');
 const ItemsRoutes = require('./items.routes');
+const playerRoutes = require('./players.routes');
+const verifyToken = require('../middleware/auth.middleware');
 
 routes.get('/', (req, res) => {
     // res.send({ msg: 'Hello from server' });
@@ -17,6 +19,7 @@ routes.get('/', (req, res) => {
 routes.use('/users', UserRoutes);
 routes.use('/auth', AuthRoutes);
 routes.use('/items', ItemsRoutes);
+routes.use('/players', verifyToken, playerRoutes);
 // routes.use('/products', ProductsRoutes);
 // routes.use('/players', PlayersRoutes);
 
@@ -47,3 +50,7 @@ module.exports = routes;
 
 //JWT --> create/sign JWT we need to give a private key(?D(G+KbPeShVmYq3t6w9z$C&F)H@McQf36) from which we generate it
 //
+
+// // typescript
+// let foo = "";
+// foo = {};//type error
