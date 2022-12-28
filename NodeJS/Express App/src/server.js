@@ -12,6 +12,35 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const socket = require('socket.io');
+const io = socket(process.env.SOCKET_PORT, {
+    cors: {
+        origin: '*'
+    }
+});
+
+//web socket
+const users = {};
+io.on('connection', clientSocket => {
+    clientSocket.on('new-user', userName => {
+        users[clientSocket.id] = userName;
+        clientSocket.broadcast.emit('new-user-connected', userName);
+        clientSocket.emit('user-message', { name: 'Admin', msg: '🍈Welcome to our chat app 🥤💝🎰' });
+        // console.log('client socketID: ', clientSocket.id);
+        // console.log('msg from client: ', msg);        
+        //emit() & broadcast.emit() that we can use to send the messages to the client        
+    });
+
+    //listener to the collect and broadcast the message sent by an user
+    clientSocket.on('chat-message', msg => {
+        clientSocket.broadcast.emit('user-message', { name: users[clientSocket.id], msg: msg });
+    });
+
+    clientSocket.on('disconnect', () => {
+        clientSocket.broadcast.emit('user-disconnected', users[clientSocket.id]);
+        delete users[clientSocket.id];
+    });
+});
 
 //serving files statically
 app.use('/public', express.static(path.join(__dirname, '../public')));
