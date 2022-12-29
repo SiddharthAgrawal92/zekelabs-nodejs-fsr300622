@@ -4,13 +4,15 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import App from './App';
 // import ClientSocket from './ClientSocket';
-import Chat from './Chat';
+// import Chat from './Chat';
+import MyPagination from './MyPagination';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <App />
   // <ClientSocket />
-  <Chat />
+  // <Chat />
+  <MyPagination />
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -42,6 +42,9 @@ io.on('connection', clientSocket => {
     });
 });
 
+//sharing of socket instance to other files in express app
+app.set('socket-io', io);
+
 //serving files statically
 app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/public', serveIndex(path.join(__dirname, '../public')));
@@ -54,6 +57,7 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB Connection error!'));
 db.on('open', () => {
     console.log('MongoDB is connected successfully');
+    // startServer();
 });
 
 //mysql
@@ -112,6 +116,9 @@ app.use('/', (req, res, next) => {
 //api-routes handler
 app.use('/', routes);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running at: http://${process.env.HOSTNAME}:${process.env.PORT}`);
-});
+const startServer = () => {
+    app.listen(process.env.PORT, () => {
+        console.log(`Server is running at: http://${process.env.HOSTNAME}:${process.env.PORT}`);
+    });
+}
+startServer();

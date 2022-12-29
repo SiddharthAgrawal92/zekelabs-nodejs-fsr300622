@@ -31,8 +31,8 @@ const validateCreatePlayer = async (req, res, next) => {
     }
 }
 const validateGetPlayer = async (req, res, next) => {
-    await query('skip', 'skip query params should be a numeric value in range [0-30]').optional().isNumeric().custom((value) => value > 30 || value < 0 ? false : true).run(req);
-    await query('limit', 'limit query params should be a numeric value in range [1-30]').optional().isNumeric().custom((value) => value > 30 || value < 1 ? false : true).run(req);
+    await query('skip', 'skip query params should be a numeric value in range [0-30]').optional().isNumeric().custom((value) => value && (value > 30 || value < 0) ? false : true).run(req);
+    await query('limit', 'limit query params should be a numeric value in range [1-30]').optional().isNumeric().custom((value) => value && (value > 30 || value < 1) ? false : true).run(req);
 
     const errors = validationResult(req);
 
