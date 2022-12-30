@@ -4,7 +4,8 @@
   "description": "for http apis",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/serve.js",
+    "build": "node src/server.js"
   },
   "keywords": [
     "http",
@@ -27,5 +28,8 @@
     "pug": "^3.0.2",
     "serve-index": "^1.9.1",
     "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
