@@ -95,7 +95,24 @@ req.on('end', ()=>{
     console.log('result: ', result);
 })
 
-// String, list input:[{}] & desired output:[{}] 
+// String, list input:[{}] & desired output:[{}]
+
+## Testing - Strive to make our program/application nearly error free.
+# Types 
+1. Unit testing - We test the unit of individual code or group of interrelated code
+2. Integration Testing - Group of components are testing together to give an output
+    a. Black box testing - Used for validation & focusses on what is the  output
+    b. White Box testing - Used for verification & focusses on how is the output achieved
+3. Regression testing - This assures that whole system works fine even after adding a new one
+4. System testing - It validates like black box if everything is working fine in all env & platforms
+Extras - Alpha(premature of release), Beta(customer are involved before release)
+
+# Testing Pyramid - Tells the amount of efforts to be done in different testing phases
+
+        *           - Others
+       ***          - Acceptance Tests
+    *********       - Integration Tests
+*****************   - Unit tests
 
 ## Miscellaneous
 1. winston logger
