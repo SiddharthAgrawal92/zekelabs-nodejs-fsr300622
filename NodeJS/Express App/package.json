@@ -4,9 +4,10 @@
   "description": "for http apis",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/serve.js",
+    "start": "nodemon src/server.js",
     "build": "node src/server.js",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:mocha": "mocha --watch --parallel 'tests/**/*.tests.js'"
   },
   "keywords": [
     "http",
@@ -31,7 +32,10 @@
     "socket.io": "^4.5.4"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "jest": "^29.3.1",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.20"
   }
 }

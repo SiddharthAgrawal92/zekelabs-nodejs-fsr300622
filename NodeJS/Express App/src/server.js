@@ -1,6 +1,7 @@
 
 const dotenv = require('dotenv');
 dotenv.config();
+const config = require('./config/appConfig');
 const express = require('express');
 const app = express();
 const routes = require('./api-routes');
@@ -52,7 +53,8 @@ app.use('/public', serveIndex(path.join(__dirname, '../public')));
 //db connection
 //mongoDB
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env.DB_CONNECTION_STRING);
+// mongoose.connect(process.env.DB_CONNECTION_STRING); // from .env file
+mongoose.connect(config.DB_CONNECTION_STRING); // from config file
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB Connection error!'));
 db.on('open', () => {
@@ -122,3 +124,5 @@ const startServer = () => {
     });
 }
 startServer();
+
+module.exports = app;

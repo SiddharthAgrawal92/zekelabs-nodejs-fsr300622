@@ -28,7 +28,7 @@ const validateCreateBulkItems = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.status(422).send({ errors: errors.array() });
+        return res.status(422).send({ errors: errors.array() });
     } else {
         next();
     }

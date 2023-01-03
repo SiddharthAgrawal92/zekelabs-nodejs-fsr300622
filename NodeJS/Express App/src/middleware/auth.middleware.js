@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
     } else {
         access_token = req.cookies && req.cookies.access_token ? req.cookies.access_token : null;
         if (!access_token) {
-            return res.status(403).send({ msg: "Token is required" });
+            return res.status(403).send("Token is required");
         }
     }
 
